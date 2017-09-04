@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/giantswarm/prometheus-pingdom-exporter/cmd"
+	"github.com/k2t0f12d/prometheus-pingdom-exporter/cmd"
 )
 
 func main() {
