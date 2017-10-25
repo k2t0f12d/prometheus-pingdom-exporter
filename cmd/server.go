@@ -34,7 +34,7 @@ var (
 
 	pingdomCheckStatus = prometheus.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "pingdom_check_status",
-		Help: "The current status of the check (0: up, 1: unconfirmed_down, 2: down, -1: paused, -2: unknown)",
+		Help: "The current status of the check (0: down, 1: up)",
 	}, []string{"id", "name", "hostname", "resolution", "paused"})
 
 	pingdomCheckResponseTime = prometheus.NewGaugeVec(prometheus.GaugeOpts{
@@ -100,6 +100,7 @@ func serverRun(cmd *cobra.Command, args []string) {
 			for _, check := range checks {
 				id := strconv.Itoa(check.ID)
 
+				/* Status Override
 				var status float64
 				switch check.Status {
 				case "unknown":
@@ -114,6 +115,14 @@ func serverRun(cmd *cobra.Command, args []string) {
 					status = 2
 				default:
 					status = 100
+				}*/
+
+				var status float64 /* WTF: Is this a double?? */
+				switch check.Status {
+				case "up":
+					status = 1
+				default:
+					status = 0
 				}
 
 				resolution := strconv.Itoa(check.Resolution)
